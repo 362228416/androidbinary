@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/shogo82148/androidbinary"
@@ -78,6 +79,7 @@ func (k *Apk) Close() error {
 // Icon returns the icon image of the APK.
 func (k *Apk) Icon(resConfig *androidbinary.ResTableConfig) (image.Image, error) {
 	iconPath := k.getResource(k.manifest.App.Icon, resConfig)
+	iconPath = strings.Replace(iconPath, "ldpi", "xxhdpi", 1);
 	if androidbinary.IsResID(iconPath) {
 		return nil, errors.New("unable to convert icon-id to icon path")
 	}
